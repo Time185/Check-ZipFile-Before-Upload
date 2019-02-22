@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://stuk.github.io/jszip/dist/jszip.js"></script>
+<script src="http://stuk.github.io/jszip-utils/dist/jszip-utils.js"></script>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/uploadZipCheck.js"></script>
+<style type="text/css">
+#img{
+	text-align: center;
+	}
+#file01{
+ 	display: none;
+}
+#sub{
+	display: none;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#img").click(function(){
+		$("#file01").click();
+		$("#sub").click();
+	});
+});
+</script>
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h3>选择一个zip文件</h3>
+	
+		<form action="PacientFileNameServlet">
+		 <input type="submit" id="sub" >
+		</form>
+		<button id="img" style="left: 38.5%;top: 100%;background-color: green;color: white;height: 75px;width: 150px">查看文件结构</button>
+		<input type="file" id="file01"  multiple /><br />
+		
+
+	 <div id="result_block" class="hidden">
+	  <h3>Content :</h3>
+	  <div id="result" ></div>
+	</div> 
+</body>
+</html>
