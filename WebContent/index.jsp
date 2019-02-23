@@ -177,7 +177,7 @@ $(document).ready(function(){
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>选择一个zip文件</h3>
+	<h3>选择一个zip文件 </h3>
 
 		<button id="img" style="left: 38.5%;top: 100%;background-color: green;color: white;height: 75px;width: 150px" onclick="sendRequest()">查看文件结构</button>
 		
