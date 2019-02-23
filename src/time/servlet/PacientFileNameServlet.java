@@ -43,9 +43,9 @@ public class PacientFileNameServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("patientName", pacientFileName);
 		
-		
+		response.getWriter().write(pacientFileName);
 		//request.getRequestDispatcher("index.jsp").forward(request, response);
-		response.sendRedirect("index.jsp");
+		//response.sendRedirect("index.jsp");
 	}
 
 	/**

@@ -18,18 +18,40 @@
 
 </style>
 <script type="text/javascript">
-
+// 用来存放服务器端传过来文件库的数据
+var patientName;
 //用来存放不符合规定的文件条目
 var fileError = new Array();	
-//$("#file").on("change", function(evt) {
-$(document).ready(function(){
 
+// 触发事件
+$(document).ready(function(){
+	$("#img").click(function(){
+		$("#file01").click();
+		$("#sub").click();
+	});
+	
+});
+
+	
+// 用来请求服务器端，获取文件库内容
+function sendRequest(){
+	$.get("PacientFileNameServlet",function(data,status){
+		 patientName = data;
+		
+	});
+}
+$(document).ready(function(){
 $("#file01").on("change" ,function(evt) {
 // 清空之前显示的条目
 $("#result").html("");
 // be sure to show the results
 
 $("#result_block").removeClass("hidden").addClass("show");
+
+
+
+
+
 // Closure to capture the file information.
 function handleFile(f) {
     // 压缩包名称
@@ -71,17 +93,12 @@ function handleFile(f) {
 	           		// 判断二级目录为文件夹，而不是文件    	           		
 	            	if(!((/\./).test(array[arrayLen-1]))){
 	            		// 这里准备用一级文件夹   用来判断重名 
-	            		var patientName = "<%=session.getAttribute("patientName")%>";
-	            		
-	            		alert(patientName);
-	            		var patientNameArray = patientName.split(" ");
-	            		alert(patientNameArray[3]);
-	            		alert(array[0])
-	            		alert(array[0] == patientNameArray[3]);
+	            		var patientNameArray = patientName.split(" ");	            		
 	            
 	            		 for (var i = 0; i < patientNameArray.length; i++){
 	            			if(patientNameArray[i] == array[0]){
 	            				
+	            				$fileContent.append("<p style='color:red'>" +zipEntry.name + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + "与文件库中" + array[0] + "文件重名，请修改后上传！" + "</p>");
 	            				fileError.push("\n " + ' " ' + array[0] +' " ' + "与文件库中" + array[0] + "文件重名，请修改后上传！");
 	            			}
 	            		} 
@@ -147,11 +164,12 @@ for (var i = 0; i < files.length; i++) {
 });
 });
 </script>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#img").click(function(){
 		$("#file01").click();
-		//$("#sub").click();
+		$("#sub").click();
 	});
 	
 });
@@ -160,11 +178,8 @@ $(document).ready(function(){
 </head>
 <body>
 	<h3>选择一个zip文件</h3>
-	
-		<form action="PacientFileNameServlet">
-		 <input type="submit" id="sub" >
-		</form>
-		<button id="img" style="left: 38.5%;top: 100%;background-color: green;color: white;height: 75px;width: 150px">查看文件结构</button>
+
+		<button id="img" style="left: 38.5%;top: 100%;background-color: green;color: white;height: 75px;width: 150px" onclick="sendRequest()">查看文件结构</button>
 		
 		<input type="file" id="file01"  multiple /><br />
 		<%=(String)session.getAttribute("patientName")%>
